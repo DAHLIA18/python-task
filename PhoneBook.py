@@ -34,6 +34,7 @@ class PhoneBook:
         else:
             print("Phone book is empty. No contacts to display.")
 
+
 def main():
     phone_book = PhoneBook()
 
@@ -70,5 +71,6 @@ def main():
         else:
             print("Invalid choice. Please enter a number between 1 and 6.")
 
-if _name_ == "_main_":
+
+if __name__ == "_main_":
     main()
