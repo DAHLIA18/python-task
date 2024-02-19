@@ -26,4 +26,4 @@ class Gun:
                 self.is_loaded = False
                 print("Gun is empty.")
         else:
-            print("Gun is not loaded.")
+            print("Gun is not loaded. ")
