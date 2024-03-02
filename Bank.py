@@ -1,22 +1,24 @@
 from Account import Account
+from Insufficient_Funds_Exception import InsufficientFundsException
+from Invalid_Amount_Exception import InvalidAmountException
+from Invalid_Pin_Exception import InvalidPinException
 
 
-def generate_account_number(branch_code, customer_number):
-    account_number_str = str(branch_code) + '{:04d}'.format(customer_number)
-    return int(account_number_str)
 class Bank:
-    def _init_(self, name):
+
+    def __init__(self, name):
         self.name = name
         self.accounts = []
+        self.account_number = 1
 
     def register_customer(self, name, pin):
-        branch_code = 1234
-        customer_number = len(self.accounts) + 1
-        self.generate_account_number(branch_code, customer_number)
-
-        account = Account()
+        account = Account(self.account_number, name, pin)
         self.accounts.append(account)
+        self.account_number += 1
         return account
+
+    def generate_account_number(self):
+        return self.account_number
 
     def deposit(self, account_number, amount):
         account = self.find_account(account_number)
@@ -27,25 +29,21 @@ class Bank:
 
     def withdraw(self, account_number, amount, pin):
         account = self.find_account(account_number)
-        if account:
-            account.withdraw(amount, pin)
-        else:
-            raise ValueError("Account not found")
+        account.withdraw(amount, pin)
 
     def transfer(self, from_account_number, to_account_number, amount, pin):
         from_account = self.find_account(from_account_number)
         to_account = self.find_account(to_account_number)
-
-        if from_account and to_account:
+        if from_account in self.accounts:
             from_account.withdraw(amount, pin)
             to_account.deposit(amount)
-        else:
+        if from_account not in self.accounts:
             raise ValueError("One or both accounts not found")
 
-    def check_balance(self, account_number, pin)
+    def check_balance(self, account_number, pin):
         account = self.find_account(account_number)
         if account:
-            return account.getBalance(pin)
+            return account.get_balance(pin)
         else:
             raise ValueError("Account not found")
 
@@ -56,11 +54,8 @@ class Bank:
         else:
             raise ValueError("Account not found")
 
-    def find_account(self, account_number):
+    def find_account(self, account_number) -> Account:
         for account in self.accounts:
-            if account.getNumber() == account_number:
+            if account.get_account_number() == account_number:
                 return account
-        return None
-
-    def generate_account_number(self, branch_code, customer_number):
-        pass
+        raise ValueError("cant find account")
