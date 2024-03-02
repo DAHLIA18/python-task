@@ -8,7 +8,7 @@ class BankApp:
 
     @staticmethod
     def main():
-        bank = Bank()
+        bank = Bank("DahLia Bank")
 
         try:
             while True:
@@ -69,5 +69,5 @@ class BankApp:
             pass
 
 
-if __name__ == "_main_":
-    BankApp.main()
+bank_app = BankApp()
+bank_app.main()
