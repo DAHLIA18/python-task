@@ -1,12 +1,8 @@
 class Gun:
-    def __init__(self):
-        self.is_loaded = None
-        self.ammo_count = None
-
-    def _init_(self, model, caliber, capacity, is_loaded=False):
-        self.model = model
+    def __init__(self,model,caliber,capacity,is_loaded=False):
+        self.capacity= capacity
         self.caliber = caliber
-        self.capacity = capacity
+        self.model = model
         self.is_loaded = is_loaded
         self.ammo_count = 0
 
